@@ -14,9 +14,10 @@ import uuid
 from dataclasses import dataclass
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from .brain import Brain
+if TYPE_CHECKING:
+    from .brain import Brain
 
 LOG = logging.getLogger("jarvis.browser-daemon")
 
@@ -29,8 +30,10 @@ ALLOWED_TOOL_NAMES = {
 }
 
 
-def _configure_browser_brain() -> Brain:
+def _configure_browser_brain() -> "Brain":
     """Create a Brain instance constrained to read/analysis-safe tools."""
+    from .brain import Brain
+
     brain = Brain()
     safe_tools = [
         tool
@@ -99,9 +102,9 @@ def build_browser_prompt(payload: dict[str, Any]) -> str:
 
 @dataclass
 class DaemonState:
-    sessions: dict[str, Brain]
+    sessions: dict[str, "Brain"]
 
-    def get_brain(self, session_id: str) -> Brain:
+    def get_brain(self, session_id: str) -> "Brain":
         brain = self.sessions.get(session_id)
         if brain is None:
             brain = _configure_browser_brain()
@@ -162,9 +165,9 @@ def make_handler(state: DaemonState) -> type[BaseHTTPRequestHandler]:
                 return
 
             session_id = _safe_text(payload.get("sessionId"), 128) or str(uuid.uuid4())
-            brain = state.get_brain(session_id)
-            request_text = build_browser_prompt(payload)
             try:
+                brain = state.get_brain(session_id)
+                request_text = build_browser_prompt(payload)
                 answer = brain.reply(request_text)
             except Exception as exc:  # pragma: no cover - external API/runtime failure
                 LOG.exception("Agent request failed")
