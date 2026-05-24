@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unykorn Agent</title>
+    <link rel="stylesheet" href="sidebar.css" />
+  </head>
+  <body class="unykorn-sidebar">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-name">Unykorn</span>
+      </div>
+      <div class="status">
+        <span id="daemon-dot" class="dot dot-amber" title="Daemon status"></span>
+        <span id="daemon-label" class="status-label">connecting…</span>
+      </div>
+    </header>
+
+    <section class="context" id="context">
+      <div class="context-row">
+        <span class="context-label">URL</span>
+        <span id="ctx-url" class="context-value mono"></span>
+      </div>
+      <div class="context-row">
+        <span class="context-label">Web3</span>
+        <span id="ctx-web3" class="context-value"></span>
+      </div>
+    </section>
+
+    <section class="modes">
+      <button class="mode-btn" data-mode="summarize">Summarize</button>
+      <button class="mode-btn" data-mode="explain">Explain site</button>
+      <button class="mode-btn" data-mode="web3_explain">Explain dApp</button>
+      <button class="mode-btn" data-mode="freeform">Freeform</button>
+    </section>
+
+    <section class="prompt">
+      <textarea id="prompt" placeholder="Ask Unykorn about this page…" rows="3"></textarea>
+      <button id="run" class="primary">Run</button>
+    </section>
+
+    <section class="answer" id="answer-wrap" hidden>
+      <div class="answer-meta">
+        <span id="answer-via" class="pill"></span>
+        <span id="answer-mode" class="pill pill-ghost"></span>
+      </div>
+      <div id="answer" class="answer-body"></div>
+    </section>
+
+    <footer class="footer">
+      <button id="open-options" class="link">Settings</button>
+      <span class="footer-spacer"></span>
+      <span class="footer-note">v0.1 · OpenClaw bridge</span>
+    </footer>
+
+    <script src="sidebar.js" type="module"></script>
+  </body>
+</html>
