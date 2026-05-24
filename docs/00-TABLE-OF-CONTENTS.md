@@ -8,6 +8,7 @@ Color-coded map of everything in this repo. Start with [Quick start](../README.m
 | 🟩 **Voice** | STT / TTS / wake word | [README § Configuration](../README.md#configuration) |
 | 🟪 **Brain** | LLM backends & models | [LLM upgrade path](LLM_UPGRADE_PATH.md) |
 | 🟥 **FTH mesh** | UnyKorn / OpenClaw integration | [UnyKorn integration](UNYKORN_INTEGRATION.md) · [FTH system context](FTH_SYSTEM_CONTEXT.md) |
+| 🟫 **Browser v1** | Extension + local daemon scaffold | [Sovereign Browser v1](SOVEREIGN_BROWSER_V1.md) |
 | 🟧 **Mobile** | Samsung S26 Ultra one-tap | [Mobile Samsung](MOBILE_SAMSUNG.md) · [Samsung one-tap](samsung-one-tap.md) |
 | 🟨 **Architecture** | Flowcharts & routing | [Flowcharts](FLOWCHARTS.md) |
 | ⬜ **Code** | Python package layout | [README § Project layout](../README.md#project-layout) |

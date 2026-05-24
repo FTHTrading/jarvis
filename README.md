@@ -28,6 +28,7 @@ A local, voice-controlled AI assistant for your computer — your own J.A.R.V.I.
 | 🟩 | [One-click Windows](#one-click-windows) |
 | 🟪 | [Configuration](#configuration) |
 | 🟥 | [UnyKorn / FTH integration](#unykorn--fth-integration) |
+| 🟫 | [Sovereign browser v1](#sovereign-browser-v1-extension--daemon) |
 | 🟧 | [Mobile (Samsung S26 Ultra)](#mobile-samsung) |
 | 🟨 | [OS prerequisites](#os-prerequisites-for-the-microphone) |
 | ⬜ | [Local LLM (Ollama)](#using-a-local-llm-offline-brain-with-ollama) |
@@ -116,6 +117,25 @@ Jarvis on **Primary** (DIGITALGIANT) connects to the operator stack:
 
 ---
 
+## Sovereign Browser v1 (extension + daemon)
+
+This repo includes a fast-track browser layer scaffold:
+
+- `browser-extension-v1/` — Manifest V3 extension (sidebar, context menu, new tab)
+- `jarvis/browser_daemon.py` — localhost API that routes page context into Jarvis/OpenClaw
+
+Start local daemon:
+
+```bash
+python -m jarvis.browser_daemon
+```
+
+Then load unpacked extension from `browser-extension-v1/` in Chrome/Edge.
+
+Full spec: [docs/SOVEREIGN_BROWSER_V1.md](docs/SOVEREIGN_BROWSER_V1.md)
+
+---
+
 ## Mobile (Samsung)
 
 You **cannot** run this Python repo natively on Android. Realistic one-tap path:
@@ -199,10 +219,12 @@ jarvis/
 │   ├── __main__.py        # python -m jarvis
 │   ├── assistant.py       # wake → listen → think → speak
 │   ├── brain.py           # OpenAI / Ollama / OpenClaw
+│   ├── browser_daemon.py  # Local API bridge for browser extension
 │   ├── skills.py          # tools + UnyKorn delegation
 │   ├── config.py
 │   ├── system_context.txt # FTH prompt injection
 │   └── audio/             # tts, stt, wake
+├── browser-extension-v1/  # UnyKorn browser shell (Manifest V3)
 ```
 
 ---

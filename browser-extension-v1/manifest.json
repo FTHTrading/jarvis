@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "UnyKorn Sovereign Browser Layer",
+  "version": "0.1.0",
+  "description": "UnyKorn page-aware agent overlay wired to local Jarvis/OpenClaw daemon.",
+  "permissions": [
+    "activeTab",
+    "commands",
+    "contextMenus",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "UnyKorn Agent"
+  },
+  "commands": {
+    "toggle-sidebar": {
+      "suggested_key": {
+        "default": "Ctrl+Space"
+      },
+      "description": "Toggle the UnyKorn in-page agent sidebar."
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  }
+}
