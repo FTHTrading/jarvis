@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unykorn Agent</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo" aria-hidden="true">◆</div>
+      <div>
+        <h1>Unykorn</h1>
+        <p class="subtitle">Sovereign Browser Agent</p>
+      </div>
+      <span id="daemon-status" class="status status--unknown" title="Daemon status">●</span>
+    </header>
+
+    <section id="web3-banner" class="web3-banner hidden" aria-live="polite">
+      Web3 page detected — review before signing anything.
+    </section>
+
+    <section class="page-meta">
+      <div id="page-title" class="page-title">No page loaded</div>
+      <div id="page-url" class="page-url"></div>
+    </section>
+
+    <section class="modes" aria-label="Quick actions">
+      <button type="button" class="mode-btn" data-mode="summarize">Summarize</button>
+      <button type="button" class="mode-btn" data-mode="explain">Explain site</button>
+      <button type="button" class="mode-btn" data-mode="web3_explain">Explain dApp</button>
+    </section>
+
+    <label class="prompt-label" for="prompt">Ask Unykorn</label>
+    <textarea
+      id="prompt"
+      rows="4"
+      placeholder="Ctrl+Space — explain this page, simulate risks, draft a reply…"
+    ></textarea>
+
+    <div class="actions">
+      <button id="ask-btn" type="button" class="primary">Ask</button>
+      <button id="refresh-context-btn" type="button" class="ghost">Refresh context</button>
+    </div>
+
+    <section id="response" class="response hidden" aria-live="polite">
+      <h2>Response</h2>
+      <pre id="response-text"></pre>
+      <p id="response-meta" class="response-meta"></p>
+    </section>
+
+    <footer class="footer">
+      <span>OpenClaw mesh · Passive mode (read-only)</span>
+    </footer>
+
+    <script type="module" src="sidepanel.js"></script>
+  </body>
+</html>

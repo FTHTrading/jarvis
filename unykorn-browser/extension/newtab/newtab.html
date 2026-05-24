@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unykorn — Command</title>
+    <link rel="stylesheet" href="newtab.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <div class="glow" aria-hidden="true"></div>
+      <header>
+        <div class="mark">◆</div>
+        <h1>Unykorn Sovereign Browser</h1>
+        <p>Command your mesh · OpenClaw · Web3-aware · Passive mode</p>
+      </header>
+
+      <form id="command-form" class="command">
+        <input
+          id="command-input"
+          type="text"
+          autocomplete="off"
+          placeholder="Command Unykorn — summarize, explain, plan…"
+        />
+        <button type="submit">Ask</button>
+      </form>
+
+      <section id="command-response" class="response hidden" aria-live="polite"></section>
+
+      <nav class="tiles" aria-label="Quick links">
+        <a href="https://hail.unykorn.org" target="_blank" rel="noreferrer">Hail Command</a>
+        <a href="https://storm.unykorn.org" target="_blank" rel="noreferrer">Storm Ops</a>
+        <a href="https://law.unykorn.org" target="_blank" rel="noreferrer">Law / x402</a>
+        <a href="https://unykorn.ai" target="_blank" rel="noreferrer">Unykorn.ai</a>
+      </nav>
+
+      <footer>
+        <span id="daemon-pill" class="pill">Checking daemon…</span>
+        <span>Ctrl+Shift+U opens the agent sidebar on any tab</span>
+      </footer>
+    </main>
+    <script type="module" src="newtab.js"></script>
+  </body>
+</html>

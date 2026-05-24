@@ -91,7 +91,9 @@ Use `x402-ranger` agent for paid/x402/Apostle work.
 
 ## Sovereign Browser
 
-[FTHTrading/browser](https://github.com/FTHTrading/browser) — search + delegate + x402 in one chrome. Jarvis is the **desktop voice shell**; Browser is the **navigation + commerce shell**. Same gateway (:18789), different UX.
+**In-repo MVP:** [unykorn-browser/](../unykorn-browser/) — Chromium extension + local daemon (`:8787`) → OpenClaw. Load unpacked in Edge/Chrome; start daemon with `bash unykorn-browser/scripts/start-daemon.sh`.
+
+**Full shell roadmap:** [FTHTrading/browser](https://github.com/FTHTrading/browser) — search + delegate + x402 in one chrome. Jarvis is the **desktop voice shell**; Browser is the **navigation + commerce shell**. Same gateway (:18789), different UX.
 
 ## Environment variables
 

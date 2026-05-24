@@ -112,7 +112,7 @@ Jarvis on **Primary** (DIGITALGIANT) connects to the operator stack:
 
 **Full guide:** [docs/UNYKORN_INTEGRATION.md](docs/UNYKORN_INTEGRATION.md) · [docs/FTH_SYSTEM_CONTEXT.md](docs/FTH_SYSTEM_CONTEXT.md)
 
-**Sovereign Browser:** [FTHTrading/browser](https://github.com/FTHTrading/browser) — search, delegate, and x402 lanes in one shell. Jarvis is the desktop **voice** companion; Browser is the **navigation** companion. Same OpenClaw gateway.
+**Sovereign Browser:** [unykorn-browser/](unykorn-browser/) — MV3 extension + local daemon wired to OpenClaw (MVP in this repo). Also see [FTHTrading/browser](https://github.com/FTHTrading/browser) for the full shell roadmap. Jarvis is the desktop **voice** companion; Browser is the **navigation** companion. Same OpenClaw gateway.
 
 ---
 
@@ -193,6 +193,7 @@ Open `jarvis/skills.py` — add a function + JSON schema to `SKILLS`. The brain 
 ```
 jarvis/
 ├── docs/                  # Launch guides, UnyKorn integration, flowcharts
+├── unykorn-browser/       # Sovereign Browser MVP (extension + daemon)
 ├── scripts/
 │   └── start-jarvis.ps1   # One-click Windows launcher
 ├── jarvis/

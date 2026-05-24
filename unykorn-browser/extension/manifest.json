@@ -1,0 +1,70 @@
+{
+  "manifest_version": 3,
+  "name": "Unykorn Sovereign Browser",
+  "short_name": "Unykorn",
+  "version": "0.1.0",
+  "description": "Agentic Web3 browser layer — Ask Unykorn on any page, wired to OpenClaw.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Ask Unykorn",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "sidepanel/sidepanel.html"
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab/newtab.html"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "scripting",
+    "sidePanel",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8787/*",
+    "http://localhost:8787/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content/content-script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Open Unykorn side panel"
+    },
+    "ask-unykorn": {
+      "suggested_key": {
+        "default": "Ctrl+Space",
+        "mac": "Command+Space"
+      },
+      "description": "Focus Unykorn command input"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["sidepanel/*", "newtab/*", "shared/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
