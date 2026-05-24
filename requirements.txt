@@ -1,0 +1,12 @@
+openai>=1.30.0
+edge-tts>=6.1.9
+SpeechRecognition>=3.10.0
+pyaudio>=0.2.14
+pygame>=2.5.2
+rich>=13.7.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+pyautogui>=0.9.54
+psutil>=5.9.8
+pyperclip>=1.8.2
+Pillow>=10.3.0
