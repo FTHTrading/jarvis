@@ -1,0 +1,24 @@
+[package]
+name    = "unykorn-browser"
+version = "0.3.0"
+edition = "2021"
+
+[lib]
+name        = "unykorn_browser_lib"
+crate-type  = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "unykorn-browser"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri         = { version = "2", features = ["devtools"] }
+tauri-plugin-shell = { version = "2" }
+serde         = { version = "1", features = ["derive"] }
+serde_json    = "1"
+reqwest       = { version = "0.12", features = ["json"] }
+open          = "5"
+tokio         = { version = "1", features = ["full"] }

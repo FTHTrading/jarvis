@@ -1,0 +1,108 @@
+/* ── App shell ───────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #08080f;
+  --bg2:       #0f0f1e;
+  --bg3:       #161626;
+  --border:    rgba(124,58,237,.18);
+  --purple:    #7C3AED;
+  --purple-lt: #a78bfa;
+  --text:      #e2e0f0;
+  --text2:     #9090b8;
+  --text3:     #5a5a80;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html, body, #root { height: 100%; background: var(--bg); color: var(--text); overflow: hidden; }
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content-row {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.webview-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.webview-placeholder {
+  flex: 1;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.url-display {
+  color: var(--text3);
+  font-size: 13px;
+  font-family: monospace;
+}
+
+/* ── New Tab ─────────────────────────────────────────────────────────────── */
+.newtab-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  padding: 60px 20px;
+}
+.nt-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.nt-name {
+  font-size: 40px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #c4b5fd, #7C3AED);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.nt-form { width: 100%; max-width: 560px; }
+.nt-input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid rgba(124,58,237,.35);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 16px;
+  font-family: inherit;
+  padding: 14px 20px;
+  outline: none;
+  transition: border-color .15s;
+}
+.nt-input:focus { border-color: var(--purple); }
+.nt-input::placeholder { color: var(--text3); }
+.nt-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.nt-link {
+  padding: 8px 18px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text2);
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all .15s;
+}
+.nt-link:hover {
+  border-color: var(--purple);
+  color: var(--purple-lt);
+}

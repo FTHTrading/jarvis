@@ -1,0 +1,39 @@
+{
+  "productName": "UnykornBrowser",
+  "version":     "0.3.0",
+  "identifier":  "org.unykorn.browser",
+  "build": {
+    "beforeDevCommand":   "npm run dev",
+    "beforeBuildCommand": "npm run build",
+    "devUrl":  "http://localhost:1420",
+    "frontendDist": "../dist"
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/icon128.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  },
+  "app": {
+    "windows": [
+      {
+        "label":        "main",
+        "title":        "Unykorn Browser",
+        "width":        1280,
+        "height":       840,
+        "minWidth":     900,
+        "minHeight":    600,
+        "resizable":    true,
+        "fullscreen":   false,
+        "decorations":  false,
+        "transparent":  false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  }
+}

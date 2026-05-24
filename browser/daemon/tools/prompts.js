@@ -1,13 +1,28 @@
 /**
  * System + user prompt builders for each agent mode.
+ * Loads the canonical system prompt from browser/agent/system-prompt.md when available.
  */
 "use strict";
 
-const SYSTEM_BASE = `You are the Unykorn Sovereign Agent — the AI layer of the Unykorn OS browser.
-You are wired into the FTH / OpenClaw operator mesh.
+import fs   from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Load canonical system prompt — fallback to inline if file not found
+function loadSystemPromptBase() {
+  try {
+    const promptPath = path.join(__dirname, "../../agent/system-prompt.md");
+    return fs.readFileSync(promptPath, "utf8");
+  } catch (_) {
+    return INLINE_SYSTEM_BASE;
+  }
+}
+
+const INLINE_SYSTEM_BASE = `You are the Unykorn Sovereign Browser Agent — the AI brain of the Unykorn OS browser layer.
 Be concise, precise, and truthful. Use markdown for structure.
-Never invent wallet keys, token balances, or on-chain data.
-If you cannot verify a fact, say so clearly.`;
+Never invent wallet keys, token balances, or on-chain data.`;
 
 const MODE_INSTRUCTIONS = {
   summarize: `Summarize the current page for the operator. Cover: purpose, key content, action items. Keep it under 200 words.`,
@@ -26,6 +41,7 @@ Be direct and safety-conscious.`,
 };
 
 export function buildSystemPrompt(mode, context) {
+  const SYSTEM_BASE = loadSystemPromptBase();
   const modeInstr = MODE_INSTRUCTIONS[mode] ?? MODE_INSTRUCTIONS.freeform;
 
   let systemPrompt = `${SYSTEM_BASE}\n\nTask: ${modeInstr}`;

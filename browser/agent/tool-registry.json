@@ -1,0 +1,185 @@
+{
+  "_meta": {
+    "version": "0.1.0",
+    "agent": "unykorn-browser",
+    "description": "Tool registry for the Unykorn Sovereign Browser Agent. Register these tools in your OpenClaw agent config.",
+    "openclaw_agent_id": "unykorn-browser",
+    "gateway": "http://127.0.0.1:18789"
+  },
+  "tools": [
+    {
+      "name": "summarize_page",
+      "description": "Summarize the current browser page for the operator. Returns a ≤200-word plain-language summary covering purpose, key content, and any action items.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "url":       { "type": "string",  "description": "Full page URL" },
+          "title":     { "type": "string",  "description": "Page title" },
+          "fullText":  { "type": "string",  "description": "Extracted page text (first 8000 chars)" },
+          "selection": { "type": "string",  "description": "Text selected by operator (optional)" }
+        },
+        "required": ["url"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "summary": { "type": "string" },
+          "wordCount": { "type": "integer" }
+        }
+      }
+    },
+    {
+      "name": "explain_site",
+      "description": "Explain what a website or product does. Covers: what it is, who it's for, key features, notable risks. ≤300 words.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "url":      { "type": "string" },
+          "title":    { "type": "string" },
+          "fullText": { "type": "string" }
+        },
+        "required": ["url"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "explanation": { "type": "string" },
+          "category":    { "type": "string", "description": "e.g. DeFi, NFT marketplace, news, SaaS, etc." },
+          "riskLevel":   { "type": "string", "enum": ["low", "medium", "high", "unknown"] }
+        }
+      }
+    },
+    {
+      "name": "web3_explain",
+      "description": "Analyze a Web3 page, dApp, or smart contract. Covers: protocol category, chains supported, risk assessment, contract address analysis, plain-English behavior summary.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "url":         { "type": "string" },
+          "title":       { "type": "string" },
+          "fullText":    { "type": "string" },
+          "contracts":   {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "EVM contract addresses (0x...) detected on page"
+          },
+          "hasEthereum": { "type": "boolean", "description": "window.ethereum present" },
+          "hasSolana":   { "type": "boolean", "description": "window.solana present" },
+          "isKnownDapp": { "type": "boolean", "description": "URL matched known dApp domain list" }
+        },
+        "required": ["url"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "protocol":      { "type": "string" },
+          "category":      { "type": "string", "enum": ["DEX", "lending", "NFT", "bridge", "staking", "perps", "payments", "wallet", "explorer", "other"] },
+          "chains":        { "type": "array", "items": { "type": "string" } },
+          "riskLevel":     { "type": "string", "enum": ["low", "medium", "high", "critical", "unknown"] },
+          "riskFactors":   { "type": "array", "items": { "type": "string" } },
+          "explanation":   { "type": "string" },
+          "contracts":     { "type": "array", "items": { "type": "string" } },
+          "safetyVerdict": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "freeform_query",
+      "description": "Answer any operator question with the current page as context. General-purpose, respects the full page text and selection.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "prompt":    { "type": "string", "description": "Operator's question or instruction" },
+          "url":       { "type": "string" },
+          "title":     { "type": "string" },
+          "fullText":  { "type": "string" },
+          "selection": { "type": "string" }
+        },
+        "required": ["prompt"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "answer": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "log_to_nil33",
+      "description": "Log a browser agent interaction event to the NIL33 athlete/entity graph. Fire-and-forget — does not block response.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "url":           { "type": "string" },
+          "title":         { "type": "string" },
+          "mode":          { "type": "string" },
+          "answerSnippet": { "type": "string", "description": "First 200 chars of answer" },
+          "walletAddress": { "type": "string", "description": "Connected wallet address if known" },
+          "entityId":      { "type": "string", "description": "NIL33 entity ID if already resolved" }
+        },
+        "required": ["url", "mode"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "logged": { "type": "boolean" },
+          "eventId": { "type": "string" }
+        }
+      }
+    },
+    {
+      "name": "resolve_nil33_identity",
+      "description": "Resolve a wallet address to a NIL33 entity (athlete profile, Troptions holder, etc.).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "walletAddress": { "type": "string", "description": "EVM or Solana wallet address" },
+          "chain":         { "type": "string", "enum": ["ethereum", "solana", "polygon", "base", "other"] }
+        },
+        "required": ["walletAddress"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "found":      { "type": "boolean" },
+          "entityId":   { "type": "string" },
+          "entityName": { "type": "string" },
+          "entityType": { "type": "string", "enum": ["athlete", "operator", "institution", "unknown"] },
+          "nilProfile": { "type": "object" }
+        }
+      }
+    },
+    {
+      "name": "delegate_to_openclaw",
+      "description": "Hand off a complex multi-step task to a specialist agent in the OpenClaw roster.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "enum": ["main", "infra-watchdog", "x402-ranger", "troptions-scout", "vault-custodian", "intel-partner", "inspector", "code-forge-alpha", "code-forge-beta"],
+            "description": "Target OpenClaw agent"
+          },
+          "message": { "type": "string", "description": "Task description for the agent" },
+          "context": {
+            "type": "object",
+            "description": "Optional page / wallet context to include",
+            "properties": {
+              "url":       { "type": "string" },
+              "contracts": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "required": ["agent_id", "message"]
+      },
+      "returns": {
+        "type": "object",
+        "properties": {
+          "delegated": { "type": "boolean" },
+          "jobId":     { "type": "string" },
+          "response":  { "type": "string" }
+        }
+      }
+    }
+  ]
+}
