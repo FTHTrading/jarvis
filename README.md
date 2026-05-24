@@ -28,6 +28,7 @@ A local, voice-controlled AI assistant for your computer — your own J.A.R.V.I.
 | 🟩 | [One-click Windows](#one-click-windows) |
 | 🟪 | [Configuration](#configuration) |
 | 🟥 | [UnyKorn / FTH integration](#unykorn--fth-integration) |
+| 🟫 | [Sovereign Browser layer](#sovereign-browser-layer) |
 | 🟧 | [Mobile (Samsung S26 Ultra)](#mobile-samsung) |
 | 🟨 | [OS prerequisites](#os-prerequisites-for-the-microphone) |
 | ⬜ | [Local LLM (Ollama)](#using-a-local-llm-offline-brain-with-ollama) |
@@ -116,6 +117,25 @@ Jarvis on **Primary** (DIGITALGIANT) connects to the operator stack:
 
 ---
 
+## Sovereign Browser layer
+
+This repo includes a fast v1 scaffold for the **UnyKorn Sovereign Browser Layer**:
+
+- `browser-extension/` — Manifest V3 Chromium extension with branded popup, new tab command page, context menu, page capture, and Web3-context hints.
+- `python -m jarvis.browser_daemon` — local daemon on `http://127.0.0.1:8765` that receives page context and routes it through Jarvis/OpenClaw.
+
+Run it locally:
+
+```bash
+python -m jarvis.browser_daemon
+```
+
+Then load `browser-extension/` as an unpacked extension in Edge or Chrome. The browser layer is intentionally **Passive** in v1: it can summarize, explain, draft, and risk-check, but wallet, identity, payment, form-submit, and off-site actions stay behind explicit approval gates.
+
+Full guide: [docs/SOVEREIGN_BROWSER.md](docs/SOVEREIGN_BROWSER.md)
+
+---
+
 ## Mobile (Samsung)
 
 You **cannot** run this Python repo natively on Android. Realistic one-tap path:
@@ -198,11 +218,13 @@ jarvis/
 ├── jarvis/
 │   ├── __main__.py        # python -m jarvis
 │   ├── assistant.py       # wake → listen → think → speak
+│   ├── browser_daemon.py  # localhost bridge for browser extension
 │   ├── brain.py           # OpenAI / Ollama / OpenClaw
 │   ├── skills.py          # tools + UnyKorn delegation
 │   ├── config.py
 │   ├── system_context.txt # FTH prompt injection
 │   └── audio/             # tts, stt, wake
+├── browser-extension/     # UnyKorn Manifest V3 browser layer
 ```
 
 ---

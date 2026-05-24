@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "UnyKorn Sovereign Browser Layer",
+  "description": "UnyKorn-branded browser layer that sends page context to the local Jarvis/OpenClaw daemon.",
+  "version": "0.1.0",
+  "permissions": ["activeTab", "contextMenus", "scripting", "storage"],
+  "host_permissions": ["http://127.0.0.1:8765/*", "http://localhost:8765/*"],
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Ask UnyKorn",
+    "default_popup": "sidebar.html"
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Open Ask UnyKorn"
+    }
+  }
+}

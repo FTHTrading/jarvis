@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ask UnyKorn</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="panel">
+    <header class="hero">
+      <div class="mark">U</div>
+      <div>
+        <p class="eyebrow">Sovereign Browser</p>
+        <h1>Ask UnyKorn</h1>
+      </div>
+    </header>
+
+    <section class="status" id="status">Checking local daemon...</section>
+
+    <label for="mode">Mode</label>
+    <select id="mode">
+      <option value="summarize">Summarize page</option>
+      <option value="explain">Explain this site</option>
+      <option value="web3_explain">Explain dApp / contract</option>
+      <option value="freeform">Freeform ask</option>
+      <option value="log_to_nil33">Draft NIL33 graph note</option>
+    </select>
+
+    <label for="prompt">Command</label>
+    <textarea id="prompt" rows="5" placeholder="Ask about this tab, selected text, dApp risk, or next steps."></textarea>
+
+    <div class="actions">
+      <button id="send">Send to Jarvis</button>
+      <button id="last" class="secondary">Last result</button>
+    </div>
+
+    <section class="result" id="result" aria-live="polite"></section>
+
+    <footer>
+      Passive mode only. Wallet, identity, payment, and posting actions require explicit approval.
+    </footer>
+
+    <script src="sidebar.js"></script>
+  </body>
+</html>

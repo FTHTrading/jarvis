@@ -8,6 +8,7 @@ Color-coded map of everything in this repo. Start with [Quick start](../README.m
 | 🟩 **Voice** | STT / TTS / wake word | [README § Configuration](../README.md#configuration) |
 | 🟪 **Brain** | LLM backends & models | [LLM upgrade path](LLM_UPGRADE_PATH.md) |
 | 🟥 **FTH mesh** | UnyKorn / OpenClaw integration | [UnyKorn integration](UNYKORN_INTEGRATION.md) · [FTH system context](FTH_SYSTEM_CONTEXT.md) |
+| 🟫 **Browser** | UnyKorn browser extension + local daemon | [Sovereign Browser](SOVEREIGN_BROWSER.md) |
 | 🟧 **Mobile** | Samsung S26 Ultra one-tap | [Mobile Samsung](MOBILE_SAMSUNG.md) · [Samsung one-tap](samsung-one-tap.md) |
 | 🟨 **Architecture** | Flowcharts & routing | [Flowcharts](FLOWCHARTS.md) |
 | ⬜ **Code** | Python package layout | [README § Project layout](../README.md#project-layout) |
@@ -19,6 +20,7 @@ Color-coded map of everything in this repo. Start with [Quick start](../README.m
 - **Nerve voice HUD:** http://127.0.0.1:3080
 - **Command portal:** https://hail.unykorn.org
 - **Sovereign Browser:** https://github.com/FTHTrading/browser
+- **Local browser daemon:** `python -m jarvis.browser_daemon`
 
 ## Related repos (FTHTrading)
 
