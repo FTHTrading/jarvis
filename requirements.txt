@@ -1,0 +1,31 @@
+# --- core (required) ---
+openai>=1.51.0
+python-dotenv>=1.0.1
+rich>=13.7.1
+httpx>=0.27.0
+
+# --- voice output (text-to-speech) ---
+# ElevenLabs gives the most lifelike voices. Optional but recommended.
+elevenlabs>=1.7.0
+# Offline fallback TTS (no API key required).
+pyttsx3>=2.90
+
+# --- voice input (speech-to-text) ---
+# Microphone capture. PortAudio must be installed on the OS (see README).
+sounddevice>=0.4.7
+soundfile>=0.12.1
+numpy>=1.26.0
+# Local Whisper STT (no API call, runs on CPU/GPU).
+faster-whisper>=1.0.3
+
+# --- audio playback ---
+# Cross-platform playback for TTS audio bytes.
+simpleaudio>=1.0.4; platform_system != "Linux"
+pydub>=0.25.1
+
+# --- wake word ("Hey Jarvis") ---
+# Open-source wake word detection. Optional; falls back to push-to-talk.
+openwakeword>=0.6.0
+
+# --- skills / tools ---
+duckduckgo-search>=6.2.0
