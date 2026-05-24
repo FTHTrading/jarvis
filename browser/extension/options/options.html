@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Unykorn settings</title>
+    <link rel="stylesheet" href="../sidebar/sidebar.css" />
+    <style>
+      body.unykorn-sidebar { padding: 24px; max-width: 640px; margin: 0 auto; }
+      .field { display: grid; gap: 4px; margin-bottom: 14px; }
+      .field label { font-size: 12px; color: var(--unk-fg-dim); text-transform: uppercase; letter-spacing: 0.6px; }
+      .field input {
+        background: var(--unk-bg-2); border: 1px solid var(--unk-border);
+        color: var(--unk-fg); border-radius: var(--unk-radius);
+        padding: 9px 10px; font: inherit;
+      }
+      .field input:focus { outline: none; border-color: var(--unk-accent); }
+      .row { display: flex; gap: 8px; align-items: center; }
+      .saved { font-size: 12px; color: var(--unk-green); }
+    </style>
+  </head>
+  <body class="unykorn-sidebar">
+    <header class="topbar" style="border: none; padding-left: 0;">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-name">Unykorn settings</span>
+      </div>
+    </header>
+
+    <p style="color: var(--unk-fg-dim); margin: 4px 0 18px;">
+      The extension talks to a local daemon, which bridges to your OpenClaw / Unykorn mesh.
+      Defaults match the Jarvis stack on Primary.
+    </p>
+
+    <div class="field">
+      <label for="daemon-url">Daemon URL</label>
+      <input id="daemon-url" type="url" placeholder="http://127.0.0.1:18790" />
+    </div>
+
+    <div class="field">
+      <label for="daemon-token">Daemon token (optional)</label>
+      <input id="daemon-token" type="text" placeholder="set this if your daemon enforces UNYKORN_DAEMON_TOKEN" />
+    </div>
+
+    <div class="row">
+      <button id="save" class="primary">Save</button>
+      <button id="test" class="mode-btn">Test connection</button>
+      <span id="status" class="saved"></span>
+    </div>
+
+    <script src="options.js" type="module"></script>
+  </body>
+</html>

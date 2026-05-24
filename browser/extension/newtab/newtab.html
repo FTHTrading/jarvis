@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Unykorn</title>
+    <link rel="stylesheet" href="newtab.css" />
+  </head>
+  <body>
+    <div class="aurora"></div>
+    <main class="shell">
+      <header class="hero">
+        <div class="brand">
+          <span class="brand-mark"></span>
+          <span class="brand-name">Unykorn</span>
+        </div>
+        <div class="status">
+          <span id="daemon-dot" class="dot dot-amber"></span>
+          <span id="daemon-label">connecting…</span>
+        </div>
+      </header>
+
+      <section class="cmd">
+        <form id="cmd-form">
+          <input
+            id="cmd"
+            type="text"
+            autocomplete="off"
+            placeholder="Command Unykorn — ask, search, or paste a contract / tx hash"
+            autofocus
+          />
+        </form>
+        <div class="hint">Enter to ask · Shift+Enter to web search</div>
+      </section>
+
+      <section class="answer-panel" id="answer-wrap" hidden>
+        <div class="answer-meta">
+          <span id="answer-via" class="pill"></span>
+        </div>
+        <div id="answer" class="answer-body"></div>
+      </section>
+
+      <section class="tiles">
+        <a class="tile" href="https://hail.unykorn.org" target="_blank" rel="noreferrer">
+          <span class="tile-title">hail</span>
+          <span class="tile-sub">command surface</span>
+        </a>
+        <a class="tile" href="https://storm.unykorn.org" target="_blank" rel="noreferrer">
+          <span class="tile-title">storm</span>
+          <span class="tile-sub">infra</span>
+        </a>
+        <a class="tile" href="https://law.unykorn.org" target="_blank" rel="noreferrer">
+          <span class="tile-title">law</span>
+          <span class="tile-sub">governance</span>
+        </a>
+        <a class="tile" href="http://127.0.0.1:3080" target="_blank" rel="noreferrer">
+          <span class="tile-title">Nerve</span>
+          <span class="tile-sub">voice cockpit · :3080</span>
+        </a>
+        <a class="tile" href="http://127.0.0.1:18789" target="_blank" rel="noreferrer">
+          <span class="tile-title">OpenClaw</span>
+          <span class="tile-sub">gateway · :18789</span>
+        </a>
+        <a class="tile" href="http://127.0.0.1:11434" target="_blank" rel="noreferrer">
+          <span class="tile-title">Ollama</span>
+          <span class="tile-sub">local brain · :11434</span>
+        </a>
+      </section>
+    </main>
+    <script src="newtab.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Unykorn</title>
+    <link rel="stylesheet" href="../sidebar/sidebar.css" />
+    <style>
+      body.unykorn-sidebar { width: 320px; }
+      .popup-actions { display: grid; gap: 6px; padding: 12px 14px; }
+      .popup-actions button { width: 100%; }
+    </style>
+  </head>
+  <body class="unykorn-sidebar">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <span class="brand-name">Unykorn</span>
+      </div>
+      <div class="status">
+        <span id="daemon-dot" class="dot dot-amber"></span>
+        <span id="daemon-label" class="status-label">connecting…</span>
+      </div>
+    </header>
+    <div class="popup-actions">
+      <button id="open-sidebar" class="primary">Open agent sidebar</button>
+      <button id="open-newtab" class="mode-btn">New Unykorn tab</button>
+      <button id="open-options" class="mode-btn">Settings</button>
+    </div>
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>
