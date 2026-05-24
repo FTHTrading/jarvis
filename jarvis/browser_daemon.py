@@ -13,10 +13,10 @@ import os
 from dataclasses import dataclass
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
-from .brain import Brain
-from .config import config
+if TYPE_CHECKING:
+    from .brain import Brain
 
 DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 8765
@@ -45,6 +45,17 @@ WEB3_HINTS = (
     "etherscan",
     "solscan",
 )
+
+
+def resolved_brain_backend() -> str:
+    """Return the active brain backend without making helper imports heavy."""
+
+    try:
+        from .config import config
+
+        return config.resolved_brain()
+    except Exception:
+        return os.environ.get("JARVIS_BRAIN", "openai")
 
 
 @dataclass(frozen=True)
@@ -140,6 +151,8 @@ class BrowserAgent:
     @property
     def brain(self) -> Brain:
         if self._brain is None:
+            from .brain import Brain
+
             self._brain = Brain()
         return self._brain
 
@@ -153,7 +166,7 @@ class BrowserAgent:
             "metadata": {
                 "mode": request.mode,
                 "agentState": "passive",
-                "backend": config.resolved_brain(),
+                "backend": resolved_brain_backend(),
                 "web3Detected": request.web3_detected,
             },
         }
@@ -173,7 +186,7 @@ class BrowserDaemonHandler(BaseHTTPRequestHandler):
                 {
                     "ok": True,
                     "service": "jarvis-browser-daemon",
-                    "brain": config.resolved_brain(),
+                    "brain": resolved_brain_backend(),
                     "agentState": "passive",
                 }
             )
