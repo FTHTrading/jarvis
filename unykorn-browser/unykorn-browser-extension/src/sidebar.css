@@ -1,0 +1,146 @@
+/* Sidebar styles — Unykorn dark glass aesthetic */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0c0c14;
+  --bg2:       #111120;
+  --bg3:       #18182a;
+  --border:    rgba(124,58,237,.18);
+  --border2:   rgba(124,58,237,.32);
+  --purple:    #7C3AED;
+  --purple-lt: #a78bfa;
+  --text:      #e2e0f0;
+  --text2:     #9090b8;
+  --text3:     #5a5a80;
+  --green:     #22c55e;
+  --amber:     #f59e0b;
+  --red:       #ef4444;
+}
+
+html, body, #root { height: 100%; background: var(--bg); color: var(--text); }
+body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 13px; }
+
+.sidebar { display: flex; flex-direction: column; height: 100vh; }
+
+/* Header */
+.sb-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px 10px; background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+}
+.sb-logo { display: flex; align-items: center; gap: 8px; }
+.sb-logo-name {
+  font-weight: 700; font-size: 14px; letter-spacing: .04em;
+  background: linear-gradient(90deg,#a78bfa,#7C3AED);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* State pill */
+.sb-state {
+  font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 999px; border: 1px solid var(--border);
+  color: var(--text2); background: var(--bg3); transition: all .25s;
+}
+.sb-state--armed  { color: var(--amber); border-color: var(--amber); }
+.sb-state--active { color: var(--green); border-color: var(--green); }
+
+/* Web3 bar */
+.sb-web3-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 14px; background: rgba(124,58,237,.08);
+  border-bottom: 1px solid var(--border); font-size: 11px; color: var(--purple-lt);
+}
+.sb-web3-dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--purple-lt);
+  animation: pulse 2s infinite;
+}
+
+/* Context bar */
+.sb-context {
+  padding: 7px 14px; background: var(--bg3); border-bottom: 1px solid var(--border);
+  font-size: 11px; color: var(--text2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Mode buttons */
+.sb-modes { display: flex; gap: 6px; padding: 10px 14px 6px; flex-wrap: wrap; }
+.sb-mode-btn {
+  padding: 5px 10px; border-radius: 5px; border: 1px solid var(--border);
+  background: var(--bg3); color: var(--text2); font-size: 11px; font-weight: 500;
+  cursor: pointer; transition: all .15s; line-height: 1; font-family: inherit;
+}
+.sb-mode-btn:hover, .sb-mode-btn.active {
+  border-color: var(--purple); color: var(--purple-lt); background: rgba(124,58,237,.15);
+}
+
+/* Input */
+.sb-input-area { padding: 8px 14px; position: relative; }
+.sb-textarea {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-size: 13px; font-family: inherit;
+  padding: 10px 44px 10px 12px; resize: none; outline: none; line-height: 1.5;
+  transition: border-color .15s;
+}
+.sb-textarea:focus   { border-color: var(--purple); }
+.sb-textarea::placeholder { color: var(--text3); }
+.sb-send-btn {
+  position: absolute; right: 22px; bottom: 18px;
+  width: 32px; height: 32px; border-radius: 6px; background: var(--purple);
+  border: none; color: #fff; font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s, transform .1s;
+}
+.sb-send-btn:hover  { background: #6d28d9; }
+.sb-send-btn:active { transform: scale(.93); }
+.sb-send-btn.cancel { background: var(--red); }
+
+/* Response */
+.sb-response {
+  flex: 1; overflow-y: auto; padding: 10px 14px;
+  border-top: 1px solid var(--border);
+}
+.sb-placeholder { color: var(--text3); font-size: 12px; text-align: center; padding: 32px 0; line-height: 1.6; }
+.sb-error  { color: var(--red); font-size: 12px; margin-bottom: 8px; }
+.sb-loading {
+  display: flex; align-items: center; gap: 10px;
+  color: var(--text2); font-size: 12px; padding: 16px 0;
+}
+.sb-spinner {
+  width: 18px; height: 18px; border: 2px solid var(--border2);
+  border-top-color: var(--purple); border-radius: 50%; animation: spin .7s linear infinite;
+}
+
+/* Markdown answer */
+.sb-answer { font-size: 13px; line-height: 1.7; color: var(--text); }
+.sb-answer h1,.sb-answer h2,.sb-answer h3 { color: var(--purple-lt); margin: 12px 0 4px; font-size: 13px; font-weight: 600; }
+.sb-answer p { margin-bottom: 8px; }
+.sb-answer ul,.sb-answer ol { margin: 6px 0 8px 18px; }
+.sb-answer li { margin-bottom: 3px; }
+.sb-answer strong { color: var(--purple-lt); }
+.sb-answer code { background: var(--bg3); border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; font-size: 11px; color: var(--purple-lt); font-family: monospace; }
+.sb-answer pre  { background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; padding: 10px; overflow-x: auto; margin-bottom: 8px; }
+.sb-answer pre code { background: none; border: none; padding: 0; }
+.sb-answer a { color: var(--purple-lt); }
+
+/* Footer */
+.sb-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px; border-top: 1px solid var(--border); background: var(--bg2); font-size: 10px;
+}
+.sb-daemon-status { display: flex; align-items: center; gap: 5px; color: var(--text3); }
+.sb-status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); transition: background .3s; }
+.sb-status-dot.online  { background: var(--green); }
+.sb-status-dot.offline { background: var(--red); }
+.sb-links { display: flex; gap: 10px; }
+.sb-links a { color: var(--text3); text-decoration: none; transition: color .15s; }
+.sb-links a:hover { color: var(--purple-lt); }
+
+/* Animations */
+@keyframes spin  { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .4; } }
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 9px; }
+::-webkit-scrollbar-thumb:hover { background: #4c1d95; }

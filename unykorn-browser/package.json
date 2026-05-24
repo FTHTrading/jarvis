@@ -1,0 +1,16 @@
+{
+  "name": "unykorn-browser",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "unykorn-browser-daemon",
+    "unykorn-browser-extension"
+  ],
+  "scripts": {
+    "daemon":    "npm run dev --workspace=unykorn-browser-daemon",
+    "extension": "npm run dev --workspace=unykorn-browser-extension",
+    "build":     "npm run build --workspace=unykorn-browser-daemon && npm run build --workspace=unykorn-browser-extension",
+    "start":     "npm run start --workspace=unykorn-browser-daemon"
+  },
+  "engines": { "node": ">=18" }
+}

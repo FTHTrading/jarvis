@@ -21,3 +21,9 @@ browser/daemon/.env
 browser/daemon/daemon.log
 browser/daemon/node_modules/
 browser/node_modules/
+unykorn-browser/unykorn-browser-daemon/.env
+unykorn-browser/unykorn-browser-daemon/dist/
+unykorn-browser/unykorn-browser-daemon/node_modules/
+unykorn-browser/unykorn-browser-extension/dist/
+unykorn-browser/unykorn-browser-extension/node_modules/
+unykorn-browser/node_modules/
