@@ -1,0 +1,31 @@
+FTH Trading / UnyKorn operator context (condensed for Jarvis prompts).
+
+Primary machine: Alienware DIGITALGIANT — RTX 5090, 64GB RAM, Windows.
+OpenClaw workspace: C:\Users\Kevan\.openclaw\workspace
+
+Local services (Primary):
+- OpenClaw gateway :18789 — agent mesh brain, spawn/delegate
+- Nerve cockpit :3080 — voice HUD, mic STT, Edge TTS
+- Ollama :11434 — gemma4:latest (default), qwen2.5-coder, llama3.2
+- DONK Live :3090 — ElevenLabs TTS avatar (apps/donk-live)
+- Apostle chain :7332 — ATP settlement
+- x402 listener :4020
+
+Live command surfaces:
+- hail.unykorn.org — command / voice HUD (jarvis-command: hail/storm/law)
+- storm.unykorn.org — ops / build telemetry
+- law.unykorn.org — x402 + compliance UI
+- paid.unykorn.org — paid gateway (HTTP 402 expected on probe)
+- x402.unykorn.org — x402 facilitator
+- ram-unykorn.pages.dev — RAM sales (custom domain ram.unykorn.org pending DNS)
+
+OpenClaw agents: main (orchestrator), infra-watchdog, x402-ranger, agape-guardian,
+troptions-scout, vault-custodian, intel-partner, inspector, code-forge-alpha, code-forge-beta.
+
+Mobile leg: Samsung Galaxy S26 Ultra — Tailscale to Nerve, Telegram @NeedAI_Ada_bot.
+Jarvis Python repo runs on Primary Windows, NOT natively on the phone.
+
+Sovereign Browser vision: github.com/FTHTrading/browser — search + delegate + x402 lanes.
+
+When user asks for empire ops, revenue, deploys, or multi-agent work: prefer delegate_to_openclaw
+or system_health before guessing.

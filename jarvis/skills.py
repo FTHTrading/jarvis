@@ -3,12 +3,18 @@
 from __future__ import annotations
 
 import datetime as _dt
+import json
+import os
 import platform
 import shutil
 import subprocess
 import sys
 import webbrowser
 from typing import Any, Callable, TypedDict
+
+import httpx
+
+from .config import config
 
 
 class ToolSpec(TypedDict):
@@ -101,6 +107,77 @@ def system_info() -> str:
         f"Python: {sys.version.split()[0]}\n"
         f"Host: {platform.node()}"
     )
+
+
+def _curl_status(url: str, timeout: float = 5.0) -> str:
+    """Probe a health URL; prefer curl.exe on Windows for reliability."""
+    if platform.system() == "Windows":
+        try:
+            proc = subprocess.run(
+                ["curl.exe", "-s", "-o", "NUL", "-w", "%{http_code}", "--connect-timeout", "3", url],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+            )
+            code = (proc.stdout or "").strip() or "err"
+            return f"{url} → HTTP {code}"
+        except (FileNotFoundError, subprocess.TimeoutExpired) as exc:
+            return f"{url} → curl failed ({exc})"
+    try:
+        r = httpx.get(url, timeout=timeout)
+        return f"{url} → HTTP {r.status_code}"
+    except Exception as exc:
+        return f"{url} → error ({exc})"
+
+
+def system_health() -> str:
+    """Check OpenClaw gateway, Nerve, and Ollama on the Primary machine."""
+    gateway = config.openclaw_gateway_url.rstrip("/")
+    ollama = config.ollama_host.rstrip("/")
+    lines = [
+        _curl_status(f"{gateway}/health"),
+        _curl_status("http://127.0.0.1:3080/health"),
+        _curl_status(f"{ollama}/api/tags"),
+    ]
+    return "\n".join(lines)
+
+
+def delegate_to_openclaw(message: str, agent_id: str | None = None) -> str:
+    """Send a task to the OpenClaw agent mesh (DONK / specialists on :18789)."""
+    target = agent_id or config.openclaw_agent_id
+    cmd = [
+        "openclaw",
+        "agent",
+        "--agent",
+        target,
+        "--message",
+        message,
+        "--json",
+        "--timeout",
+        "180",
+    ]
+    env = os.environ.copy()
+    if config.openclaw_gateway_token:
+        env["OPENCLAW_GATEWAY_TOKEN"] = config.openclaw_gateway_token
+    env.setdefault("OPENCLAW_GATEWAY_URL", config.openclaw_gateway_url)
+    try:
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=190, env=env)
+    except FileNotFoundError:
+        return "OpenClaw CLI not installed. Run: npm i -g openclaw"
+    except subprocess.TimeoutExpired:
+        return f"Delegation to {target} timed out."
+    if proc.returncode != 0:
+        return (proc.stderr or proc.stdout or "delegation failed")[:800]
+    raw = (proc.stdout or "").strip()
+    try:
+        data = json.loads(raw)
+        for key in ("text", "message", "content", "reply"):
+            val = data.get(key)
+            if isinstance(val, str) and val.strip():
+                return val.strip()
+    except json.JSONDecodeError:
+        pass
+    return raw or f"Delegated to {target}; empty reply."
 
 
 # ---------------------------------------------------------------------------
@@ -202,5 +279,46 @@ SKILLS: list[ToolSpec] = [
             "parameters": {"type": "object", "properties": {}, "required": []},
         },
         "_impl": system_info,
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "system_health",
+            "description": (
+                "Probe local FTH stack health: OpenClaw gateway (:18789), "
+                "Nerve cockpit (:3080), and Ollama (:11434)."
+            ),
+            "parameters": {"type": "object", "properties": {}, "required": []},
+        },
+        "_impl": system_health,
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "delegate_to_openclaw",
+            "description": (
+                "Delegate a complex task to the OpenClaw agent mesh on the Primary "
+                "PC (DONK main or a specialist: infra-watchdog, x402-ranger, etc.). "
+                "Use for multi-step ops, x402, deploys, or TEAM_BUS work."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "Clear delegation instruction for the agent.",
+                    },
+                    "agent_id": {
+                        "type": "string",
+                        "description": (
+                            "Optional agent id (main, infra-watchdog, x402-ranger, "
+                            "code-forge-alpha, intel-partner, …). Defaults to main."
+                        ),
+                    },
+                },
+                "required": ["message"],
+            },
+        },
+        "_impl": delegate_to_openclaw,
     },
 ]

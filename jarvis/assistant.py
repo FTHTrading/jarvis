@@ -21,7 +21,7 @@ def _banner() -> None:
     console.print(
         Panel.fit(
             f"[bold cyan]{config.name}[/] online.\n"
-            f"LLM: [yellow]{config.ollama_model or config.llm_model}[/]   "
+            f"LLM: [yellow]{config.resolved_brain()} ({config.ollama_model or config.llm_model})[/]   "
             f"TTS: [yellow]{config.resolved_tts()}[/]   "
             f"STT: [yellow]{config.stt_engine}[/]   "
             f"Wake: [yellow]{config.wake_mode}[/]",
