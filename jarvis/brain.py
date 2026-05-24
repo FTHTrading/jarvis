@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import os
+import subprocess
 import sys
 from typing import Any, Callable
 
@@ -24,17 +26,21 @@ class Brain:
         self.tool_index: dict[str, Callable[..., str]] = {
             t["function"]["name"]: t["_impl"] for t in self.tools  # type: ignore[index]
         }
-        self.use_ollama = bool(self.cfg.ollama_model)
+        self.backend = self.cfg.resolved_brain()
+        self.use_ollama = self.backend == "ollama"
+        self.use_openclaw = self.backend == "openclaw"
 
-        if self.use_ollama:
+        if self.use_openclaw:
+            self._client = None
+        elif self.use_ollama:
             self._client = httpx.Client(base_url=self.cfg.ollama_host, timeout=60.0)
         else:
             from openai import OpenAI  # type: ignore
 
             if not self.cfg.openai_api_key:
                 raise RuntimeError(
-                    "OPENAI_API_KEY is not set. Add it to .env or set "
-                    "JARVIS_OLLAMA_MODEL to use a local model."
+                    "OPENAI_API_KEY is not set. Add it to .env, set "
+                    "JARVIS_OLLAMA_MODEL for Ollama, or JARVIS_BRAIN=openclaw."
                 )
             self._client = OpenAI(api_key=self.cfg.openai_api_key)
 
@@ -43,7 +49,9 @@ class Brain:
     def reply(self, user_text: str) -> str:
         """Add a user turn, run the model (with tool calls), return assistant text."""
         self.history.append({"role": "user", "content": user_text})
-        if self.use_ollama:
+        if self.use_openclaw:
+            text = self._openclaw_round_trip(user_text)
+        elif self.use_ollama:
             text = self._ollama_round_trip()
         else:
             text = self._openai_round_trip()
@@ -89,6 +97,62 @@ class Brain:
                     }
                 )
         return "I got stuck in a tool loop. Try rephrasing."
+
+    # --------------------------------------------------------------- OpenClaw
+
+    def _openclaw_round_trip(self, user_text: str) -> str:
+        """Delegate a turn to the OpenClaw gateway via CLI (gemma4 mesh on Primary)."""
+        cmd = [
+            "openclaw",
+            "agent",
+            "--agent",
+            self.cfg.openclaw_agent_id,
+            "--message",
+            user_text,
+            "--json",
+            "--timeout",
+            "120",
+        ]
+        env = os.environ.copy()
+        if self.cfg.openclaw_gateway_token:
+            env["OPENCLAW_GATEWAY_TOKEN"] = self.cfg.openclaw_gateway_token
+        env.setdefault("OPENCLAW_GATEWAY_URL", self.cfg.openclaw_gateway_url)
+        try:
+            proc = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=130,
+                env=env,
+            )
+        except FileNotFoundError:
+            return (
+                "OpenClaw CLI not found. Install openclaw globally or set "
+                "JARVIS_BRAIN=ollama / add OPENAI_API_KEY."
+            )
+        except subprocess.TimeoutExpired:
+            return "OpenClaw delegation timed out after 130 seconds."
+
+        if proc.returncode != 0:
+            err = (proc.stderr or proc.stdout or "unknown error").strip()[:500]
+            return f"OpenClaw gateway error: {err}"
+
+        raw = (proc.stdout or "").strip()
+        try:
+            data = json.loads(raw)
+            for key in ("text", "message", "content", "reply"):
+                val = data.get(key)
+                if isinstance(val, str) and val.strip():
+                    return val.strip()
+            if isinstance(data.get("result"), dict):
+                nested = data["result"]
+                for key in ("text", "message", "content"):
+                    val = nested.get(key)
+                    if isinstance(val, str) and val.strip():
+                        return val.strip()
+        except json.JSONDecodeError:
+            pass
+        return raw or "OpenClaw returned an empty reply."
 
     # ----------------------------------------------------------------- Ollama
 

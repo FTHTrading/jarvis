@@ -21,6 +21,7 @@ def _get(name: str, default: str = "") -> str:
 TTSEngine = Literal["auto", "elevenlabs", "openai", "pyttsx3"]
 STTEngine = Literal["whisper-local", "whisper-api"]
 WakeMode = Literal["openwakeword", "ptt", "off"]
+BrainBackend = Literal["openai", "ollama", "openclaw"]
 
 
 @dataclass
@@ -30,7 +31,20 @@ class Config:
     llm_model: str = field(default_factory=lambda: _get("JARVIS_LLM_MODEL", "gpt-4o-mini"))
     ollama_model: str = field(default_factory=lambda: _get("JARVIS_OLLAMA_MODEL"))
     ollama_host: str = field(
-        default_factory=lambda: _get("JARVIS_OLLAMA_HOST", "http://localhost:11434")
+        default_factory=lambda: _get("OLLAMA_HOST", _get("JARVIS_OLLAMA_HOST", "http://localhost:11434"))
+    )
+    openclaw_gateway_url: str = field(
+        default_factory=lambda: _get("OPENCLAW_GATEWAY_URL", "http://127.0.0.1:18789")
+    )
+    openclaw_gateway_token: str = field(
+        default_factory=lambda: _get("OPENCLAW_GATEWAY_TOKEN")
+    )
+    openclaw_agent_id: str = field(
+        default_factory=lambda: _get("JARVIS_OPENCLAW_AGENT", "main")
+    )
+    brain_backend: BrainBackend = field(default_factory=lambda: _get("JARVIS_BRAIN", "openai"))  # type: ignore[assignment]
+    system_context_path: Path = field(
+        default_factory=lambda: Path(_get("JARVIS_SYSTEM_CONTEXT", str(PROJECT_ROOT / "jarvis" / "system_context.txt")))
     )
 
     # TTS
@@ -72,17 +86,35 @@ class Config:
             return "openai"
         return "pyttsx3"
 
+    def resolved_brain(self) -> BrainBackend:
+        """Pick the active brain backend from env and available credentials."""
+        if self.brain_backend != "openai":
+            return self.brain_backend
+        if self.ollama_model:
+            return "ollama"
+        return "openai"
+
     def system_prompt(self) -> str:
-        return (
+        base = (
             f"You are {self.name}, a witty, concise voice-controlled assistant "
             f"styled after Tony Stark's J.A.R.V.I.S. You address the user as "
             f"'{self.user_name}'. You run locally on the user's computer and "
             "can answer questions, control the machine through provided tools, "
-            "search the web, and hold a natural spoken conversation. "
+            "search the web, delegate to the OpenClaw agent mesh, and hold a "
+            "natural spoken conversation. "
             "Replies are short and spoken aloud, so avoid Markdown, code "
             "fences, bullet lists, or long preambles unless explicitly asked. "
             "If you call a tool, briefly narrate what you're doing in one line."
         )
+        ctx_path = self.system_context_path
+        if ctx_path.is_file():
+            try:
+                extra = ctx_path.read_text(encoding="utf-8").strip()
+                if extra:
+                    return f"{base}\n\n--- FTH / UnyKorn context ---\n{extra}"
+            except OSError:
+                pass
+        return base
 
 
 config = Config()
