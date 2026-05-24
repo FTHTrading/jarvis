@@ -68,6 +68,14 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     return true;
   }
 
+  if (msg.type === "OPEN_SIDEBAR") {
+    chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+      if (tab) openSidePanel(tab).then(() => sendResponse({ ok: true }));
+      else sendResponse({ ok: false });
+    });
+    return true;
+  }
+
   if (msg.type === "DAEMON_HEALTH") {
     fetch(`${DAEMON_URL}/health`)
       .then((r) => r.json())

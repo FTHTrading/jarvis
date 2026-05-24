@@ -99,7 +99,24 @@ export async function callLLM(system, user) {
   switch (BRAIN()) {
     case "anthropic": return callAnthropic(system, user);
     case "ollama":    return callOllama(system, user);
-    case "openai":
-    default:          return callOpenAI(system, user);
+    case "openai":    return callOpenAI(system, user);
+    default: {
+      // Unknown brain — return a helpful setup message instead of crashing
+      const brain = BRAIN();
+      return [
+        `**Unykorn Daemon — configuration needed**`,
+        ``,
+        `DAEMON_BRAIN is set to \`${brain}\` but no handler exists for it.`,
+        ``,
+        `**To activate, set one of these in \`daemon/.env\`:**`,
+        ``,
+        `\`\`\``,
+        `DAEMON_BRAIN=openclaw   # routes through OpenClaw :18789 (recommended)`,
+        `DAEMON_BRAIN=openai     # needs OPENAI_API_KEY`,
+        `DAEMON_BRAIN=ollama     # needs Ollama running locally`,
+        `DAEMON_BRAIN=anthropic  # needs ANTHROPIC_API_KEY`,
+        `\`\`\``,
+      ].join("\n");
+    }
   }
 }

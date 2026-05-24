@@ -66,5 +66,7 @@ case "${1:-start}" in
     log "  1. chrome://extensions"
     log "  2. Enable 'Developer mode'"
     log "  3. 'Load unpacked' → $SCRIPT_DIR/../extension"
+    log ""
+    log "Then verify: node browser/scripts/verify.js"
     ;;
 esac

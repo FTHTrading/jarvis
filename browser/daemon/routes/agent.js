@@ -53,9 +53,41 @@ router.post("/", async (req, res) => {
 
   try {
     let answer;
+    const brain = BRAIN();
 
-    if (BRAIN() === "openclaw") {
-      answer = await callOpenClaw({ context, mode, prompt });
+    if (brain === "openclaw") {
+      try {
+        answer = await callOpenClaw({ context, mode, prompt });
+      } catch (ocErr) {
+        // OpenClaw unavailable — fall back gracefully
+        console.warn(`[agent] OpenClaw unreachable (${ocErr.message}) — using fallback`);
+        const fallback = process.env.DAEMON_FALLBACK_BRAIN ?? "ollama";
+        if (fallback !== "openclaw") {
+          try {
+            const origBrain = process.env.DAEMON_BRAIN;
+            process.env.DAEMON_BRAIN = fallback;
+            const systemPrompt = buildSystemPrompt(mode, context);
+            const userPrompt   = buildUserPrompt(mode, context, prompt);
+            answer = await callLLM(systemPrompt, userPrompt);
+            process.env.DAEMON_BRAIN = origBrain;
+          } catch (fallbackErr) {
+            answer = [
+              `**Unykorn Agent — both brains offline**`,
+              ``,
+              `- OpenClaw (:18789): offline`,
+              `- Fallback (${fallback}): offline`,
+              ``,
+              `**To fix, choose one:**`,
+              `- Start OpenClaw: it should be running at \`127.0.0.1:18789\``,
+              `- Or set a direct key in \`daemon/.env\`:`,
+              `  \`DAEMON_BRAIN=openai\` + \`OPENAI_API_KEY=sk-...\``,
+              `  \`DAEMON_BRAIN=ollama\` + run \`ollama pull gemma4\``,
+            ].join("\n");
+          }
+        } else {
+          answer = `**OpenClaw offline** (${ocErr.message})\n\nSet \`DAEMON_FALLBACK_BRAIN=ollama\` or \`openai\` in \`daemon/.env\` to enable fallback.`;
+        }
+      }
     } else {
       const systemPrompt = buildSystemPrompt(mode, context);
       const userPrompt   = buildUserPrompt(mode, context, prompt);
