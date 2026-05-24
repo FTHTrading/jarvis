@@ -114,6 +114,8 @@ Jarvis on **Primary** (DIGITALGIANT) connects to the operator stack:
 
 **Sovereign Browser:** [FTHTrading/browser](https://github.com/FTHTrading/browser) — search, delegate, and x402 lanes in one shell. Jarvis is the desktop **voice** companion; Browser is the **navigation** companion. Same OpenClaw gateway.
 
+**Unykorn browser MVP (in this repo):** [`browser/`](browser/README.md) — a Manifest V3 extension + local Node daemon that gives any Chromium browser an Unykorn-branded agent sidebar, new-tab command surface, dApp/Web3 awareness, and a direct bridge to OpenClaw at `:18789`. Runs alongside Jarvis on Primary.
+
 ---
 
 ## Mobile (Samsung)
