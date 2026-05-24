@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unykorn · New Tab</title>
+  <link rel="stylesheet" href="newtab.css" />
+</head>
+<body>
+  <div class="canvas">
+    <!-- Ambient glow orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <!-- Logo -->
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="url(#g1)" stroke-width="2"/>
+          <circle cx="24" cy="24" r="11" fill="url(#g2)" opacity=".7"/>
+          <circle cx="24" cy="24" r="4.5" fill="#fff"/>
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="48" y2="48">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#7C3AED"/>
+            </linearGradient>
+            <radialGradient id="g2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#7C3AED"/>
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <span class="brand-name">Unykorn</span>
+        <span class="brand-tagline">Sovereign Agent OS</span>
+      </div>
+    </div>
+
+    <!-- Command line -->
+    <div class="command-wrap">
+      <form class="command-form" id="command-form">
+        <div class="command-icon">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+            <circle cx="24" cy="24" r="22" stroke="#7C3AED" stroke-width="1.5" fill="none"/>
+            <path d="M8 8l8 4-8 4V8z" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <input
+          id="command-input"
+          class="command-input"
+          type="text"
+          placeholder="Command Unykorn…"
+          autocomplete="off"
+          spellcheck="false"
+          autofocus
+        />
+        <button class="command-submit" type="submit">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M2 8l12-6-5 14-2-5-5-3z" fill="white"/>
+          </svg>
+        </button>
+      </form>
+      <div class="command-hint">
+        Ctrl+Enter to send · routes to OpenClaw :18789
+      </div>
+    </div>
+
+    <!-- Quick links grid -->
+    <div class="quick-grid">
+      <a class="quick-card" href="https://hail.unykorn.org" target="_blank">
+        <div class="qc-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10 2L2 7v11h6v-5h4v5h6V7L10 2z" stroke="#a78bfa" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="qc-label">Hail</div>
+        <div class="qc-sub">Command HUD</div>
+      </a>
+      <a class="quick-card" href="https://storm.unykorn.org" target="_blank">
+        <div class="qc-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <polyline points="2,14 7,8 11,11 18,4" stroke="#a78bfa" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="qc-label">Storm</div>
+        <div class="qc-sub">Ops Telemetry</div>
+      </a>
+      <a class="quick-card" href="https://law.unykorn.org" target="_blank">
+        <div class="qc-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="3" y="3" width="14" height="14" rx="2" stroke="#a78bfa" stroke-width="1.5" fill="none"/>
+            <path d="M7 10h6M7 7h6M7 13h4" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="qc-label">Law</div>
+        <div class="qc-sub">x402 · Compliance</div>
+      </a>
+      <a class="quick-card" href="https://paid.unykorn.org" target="_blank">
+        <div class="qc-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" stroke="#a78bfa" stroke-width="1.5" fill="none"/>
+            <path d="M10 6v8M8 8h3a2 2 0 010 4H8" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="qc-label">Paid</div>
+        <div class="qc-sub">x402 Revenue</div>
+      </a>
+      <a class="quick-card" href="https://unykorn.ai" target="_blank">
+        <div class="qc-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" stroke="#a78bfa" stroke-width="1.5" fill="none"/>
+            <circle cx="10" cy="10" r="3" fill="#a78bfa" opacity=".6"/>
+          </svg>
+        </div>
+        <div class="qc-label">Apex</div>
+        <div class="qc-sub">unykorn.ai</div>
+      </a>
+      <a class="quick-card" href="https://x402.unykorn.org" target="_blank">
+        <div class="qc-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M3 10h14M10 3l7 7-7 7" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="qc-label">x402</div>
+        <div class="qc-sub">Facilitator</div>
+      </a>
+    </div>
+
+    <!-- Daemon status -->
+    <div class="status-bar" id="status-bar">
+      <span class="status-dot" id="status-dot"></span>
+      <span id="status-text">Checking daemon…</span>
+      <span class="status-sep">·</span>
+      <span id="openclaw-text">OpenClaw :18789</span>
+    </div>
+  </div>
+
+  <script src="newtab.js"></script>
+</body>
+</html>

@@ -112,7 +112,9 @@ Jarvis on **Primary** (DIGITALGIANT) connects to the operator stack:
 
 **Full guide:** [docs/UNYKORN_INTEGRATION.md](docs/UNYKORN_INTEGRATION.md) · [docs/FTH_SYSTEM_CONTEXT.md](docs/FTH_SYSTEM_CONTEXT.md)
 
-**Sovereign Browser:** [FTHTrading/browser](https://github.com/FTHTrading/browser) — search, delegate, and x402 lanes in one shell. Jarvis is the desktop **voice** companion; Browser is the **navigation** companion. Same OpenClaw gateway.
+**Sovereign Browser:** [`browser/`](browser/README.md) — search, delegate, Web3 analysis, and x402 lanes in one shell. Jarvis is the desktop **voice** companion; Browser is the **navigation** companion. Same OpenClaw gateway (:18789).
+
+> Quick start: `bash browser/scripts/start-daemon.sh` then load `browser/extension/` as an unpacked Chrome/Edge extension.
 
 ---
 

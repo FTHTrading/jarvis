@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unykorn</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0c0c14; --bg2: #111120; --bg3: #18182a;
+      --purple: #7C3AED; --purple-lt: #a78bfa;
+      --border: rgba(124,58,237,.2); --text: #e2e0f0; --text2: #9090b8; --text3: #5a5a80;
+      --green: #22c55e; --red: #ef4444;
+    }
+    body {
+      width: 260px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      font-size: 13px;
+    }
+    .header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .logo-mark svg { display: block; }
+    .logo-text {
+      font-weight: 700; font-size: 15px; letter-spacing: .04em;
+      background: linear-gradient(90deg, #a78bfa, #7C3AED);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .logo-sub { font-size: 10px; color: var(--text3); margin-top: 1px; }
+
+    .action-list { padding: 8px 0; }
+    .action-btn {
+      display: flex; align-items: center; gap: 10px;
+      width: 100%; padding: 10px 14px;
+      background: transparent; border: none;
+      color: var(--text2); font-size: 13px; font-family: inherit;
+      cursor: pointer; transition: all .15s; text-align: left;
+    }
+    .action-btn:hover { background: var(--bg3); color: var(--purple-lt); }
+    .action-btn svg { flex-shrink: 0; opacity: .7; }
+
+    .divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+    .footer {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 14px;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .status-row { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--text3); }
+    .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); }
+    .status-dot.online { background: var(--green); }
+    .status-dot.offline { background: var(--red); }
+    .ver { font-size: 10px; color: var(--text3); }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-mark">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="13" stroke="url(#pg)" stroke-width="1.5"/>
+        <circle cx="14" cy="14" r="6" fill="#7C3AED" opacity=".7"/>
+        <circle cx="14" cy="14" r="2.5" fill="#fff"/>
+        <defs>
+          <linearGradient id="pg" x1="0" y1="0" x2="28" y2="28">
+            <stop offset="0%" stop-color="#a78bfa"/>
+            <stop offset="100%" stop-color="#7C3AED"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-text">Unykorn</div>
+      <div class="logo-sub">Sovereign Agent OS</div>
+    </div>
+  </div>
+
+  <div class="action-list">
+    <button class="action-btn" id="open-sidebar">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/>
+        <line x1="10" y1="1" x2="10" y2="15" stroke="currentColor" stroke-width="1.2"/>
+      </svg>
+      Open Agent Sidebar
+    </button>
+    <button class="action-btn" id="summarize-page">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M2 4h12v1.5H2zm0 3h10v1.5H2zm0 3h8v1.5H2z"/>
+      </svg>
+      Summarize This Page
+    </button>
+    <button class="action-btn" id="explain-web3">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <polygon points="8,1 15,5 15,11 8,15 1,11 1,5" stroke="currentColor" stroke-width="1.2"/>
+        <circle cx="8" cy="8" r="2" fill="currentColor"/>
+      </svg>
+      Explain dApp / Contract
+    </button>
+    <div class="divider"></div>
+    <button class="action-btn" id="open-newtab">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M5 8h6M8 5v6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      New Tab · Dashboard
+    </button>
+    <a class="action-btn" href="https://hail.unykorn.org" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 1L1 5v10h5V9h4v6h5V5L8 1z" stroke="currentColor" stroke-width="1.2" fill="none"/>
+      </svg>
+      Hail · Command Surface
+    </a>
+  </div>
+
+  <div class="footer">
+    <div class="status-row">
+      <div class="status-dot" id="status-dot"></div>
+      <span id="status-label">Checking…</span>
+    </div>
+    <span class="ver">v0.1.0</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unykorn Agent</title>
+  <link rel="stylesheet" href="sidebar.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-row">
+        <div class="logo-mark">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10" stroke="#7C3AED" stroke-width="1.5"/>
+            <circle cx="11" cy="11" r="5" fill="#7C3AED" opacity=".8"/>
+            <circle cx="11" cy="11" r="2" fill="#fff"/>
+          </svg>
+        </div>
+        <span class="logo-name">Unykorn</span>
+        <div class="state-pill" id="state-pill" data-state="passive">Passive</div>
+      </div>
+      <div class="web3-indicator" id="web3-indicator" style="display:none">
+        <span class="web3-dot"></span>
+        <span id="web3-label">Web3</span>
+      </div>
+    </header>
+
+    <!-- Page context bar -->
+    <div class="context-bar" id="context-bar">
+      <span class="context-icon">📄</span>
+      <span class="context-title" id="context-title">Loading page…</span>
+    </div>
+
+    <!-- Mode buttons -->
+    <div class="mode-row">
+      <button class="mode-btn active" data-mode="summarize" title="Summarize this page">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M2 4h12v1.5H2zm0 3h10v1.5H2zm0 3h8v1.5H2z"/></svg>
+        Summarize
+      </button>
+      <button class="mode-btn" data-mode="explain" title="Explain what this site does">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M8 7v5M8 5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Explain
+      </button>
+      <button class="mode-btn" data-mode="web3_explain" id="web3-btn" title="Explain this dApp or contract">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><polygon points="8,1 15,5 15,11 8,15 1,11 1,5" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>
+        Web3
+      </button>
+      <button class="mode-btn" data-mode="freeform" title="Ask anything">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M2 2h12v10H9l-3 3v-3H2z" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+        Ask
+      </button>
+    </div>
+
+    <!-- Prompt input -->
+    <div class="input-area">
+      <textarea
+        id="prompt-input"
+        class="prompt-textarea"
+        placeholder="Command Unykorn…"
+        rows="3"
+        spellcheck="false"
+      ></textarea>
+      <button class="send-btn" id="send-btn" title="Send (Ctrl+Enter)">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 8l12-6-5 14-2-5-5-3z" fill="#fff"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Response area -->
+    <div class="response-area" id="response-area">
+      <div class="response-placeholder" id="response-placeholder">
+        <div class="placeholder-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="14" stroke="#7C3AED" stroke-width="1.5" opacity=".4"/>
+            <circle cx="16" cy="16" r="6" fill="#7C3AED" opacity=".3"/>
+            <circle cx="16" cy="16" r="2.5" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <p>Pick a mode above or type a prompt.<br/>Unykorn reads this page and routes to the mesh.</p>
+      </div>
+      <div class="response-content markdown" id="response-content" style="display:none"></div>
+      <div class="loading-row" id="loading-row" style="display:none">
+        <div class="spinner"></div>
+        <span id="loading-label">Routing to OpenClaw…</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="footer-status" id="daemon-status">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-label">Checking daemon…</span>
+      </span>
+      <span class="footer-links">
+        <a href="https://hail.unykorn.org" target="_blank" title="Command surface">hail</a>
+        <a href="https://storm.unykorn.org" target="_blank" title="Ops telemetry">storm</a>
+      </span>
+    </footer>
+  </div>
+
+  <script src="sidebar.js"></script>
+</body>
+</html>

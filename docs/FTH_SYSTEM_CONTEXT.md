@@ -86,7 +86,7 @@ Default model: `ollama/gemma4:latest`. Fallbacks: `qwen2.5:7b`, `qwen2.5-coder:7
 | Path / repo | Role |
 |-------------|------|
 | FTHTrading/jarvis | This voice assistant |
-| FTHTrading/browser | Sovereign Browser |
+| browser/           | Sovereign Browser (extension + daemon) |
 | UnyKorn-X402-aws | Monorepo, CF registry |
 | openclaw-nerve | Nerve source |
 | apps/jarvis-command | hail/storm/law |

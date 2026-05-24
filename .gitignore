@@ -17,3 +17,7 @@ env/
 models/
 *.onnx
 *.tflite
+browser/daemon/.env
+browser/daemon/daemon.log
+browser/daemon/node_modules/
+browser/node_modules/

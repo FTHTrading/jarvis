@@ -91,7 +91,7 @@ Use `x402-ranger` agent for paid/x402/Apostle work.
 
 ## Sovereign Browser
 
-[FTHTrading/browser](https://github.com/FTHTrading/browser) — search + delegate + x402 in one chrome. Jarvis is the **desktop voice shell**; Browser is the **navigation + commerce shell**. Same gateway (:18789), different UX.
+[`browser/`](../browser/README.md) — Chrome/Edge extension + local daemon (port 40201). Web3-aware agent sidebar, branded new tab, OpenClaw routing. Jarvis is the **desktop voice shell**; Browser is the **navigation + commerce shell**. Same gateway (:18789), different UX.
 
 ## Environment variables
 
